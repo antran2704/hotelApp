@@ -1,0 +1,147 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+
+$primary-color: #70a1ff;
+
+// scroll
+@mixin scroll() {
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 6px;
+    height: 8px;
+    overflow: overlay;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    overflow: overlay;
+  }
+}
+
+@mixin scrollHidden() {
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 6px;
+    overflow: overlay;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 10px;
+    overflow: overlay;
+  }
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "Poppins", sans-serif;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  @include scroll;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  padding: 0;
+  margin: 0;
+  color: black;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+input,
+button {
+  outline: none;
+  border: none;
+  padding: 0;
+}
+
+a {
+  display: block;
+  color: black;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.content {
+  height: 100vh;
+  background-color: whitesmoke;
+  box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.6);
+  border-radius: 30px;
+}
+
+.h-cus {
+  height: 90%;
+}
+
+.p-x {
+  padding: 0 20px;
+}
+
+// back btn
+.back__btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: transparent;
+  z-index: 10;
+
+  .back__icon {
+    font-size: 3rem;
+    color: $primary-color;
+    background-color: rgba(218, 224, 219, 1);
+    padding: 10px;
+    border-radius: 50%;
+    opacity: 0.6;
+    transition: all ease 0.4s;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+@mixin cus($width) {
+  @media screen and (max-width: $width) {
+    @content;
+  }
+}
+
+
+// animation loading
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }
+}

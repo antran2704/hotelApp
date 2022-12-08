@@ -1,0 +1,127 @@
+.home__list {
+  height: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  margin: 10px 0;
+
+  .slick-slider,
+  .slick-list {
+    height: 100% !important;
+    width: 96%;
+    margin: 0 auto;
+  }
+  .slick-track {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 6px;
+  }
+
+  .slick-slide {
+    width: 100%;
+    height: 90%;
+
+    & > div {
+      width: 100%;
+      height: 100%;
+    }
+
+    &.slick-active {
+      .home__item {
+        transform: scaleY(1.08);
+      }
+    }
+  }
+
+  .home__item {
+    position: relative;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    transform: scale(1);
+    transition: all linear 0.2s;
+    // scroll-snap-align: center;
+    // min-width: 90%;
+
+    .animated {
+      width: 100%;
+      height: 100%;
+    }
+
+    .home__img {
+      border-radius: 20px;
+    }
+    .home__content {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+
+      .home__content-link {
+        position: absolute;
+        bottom: 0;
+        background-color: transparent;
+        height: 40%;
+        width: 92%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1;
+      }
+
+      .home__content-header {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        height: fit-content;
+        width: fit-content;
+      }
+      .home__content-footer {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+      .home__content-name {
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+      }
+      .home__content-location {
+        font-size: 1.6rem;
+        font-weight: 400;
+        color: white;
+      }
+      .home__content-rate {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        span {
+          font-size: 1.4rem;
+          color: white;
+        }
+      }
+
+      .icon__heart {
+        position: relative;
+        font-size: 2.6rem;
+        color: #02cfc3;
+        cursor: pointer;
+        z-index: 2;
+      }
+      .icon__star {
+        font-size: 2rem;
+        color: #f68014;
+      }
+    }
+  }
+}
