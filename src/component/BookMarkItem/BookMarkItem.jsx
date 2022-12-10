@@ -4,7 +4,7 @@ import { AiOutlineHeart, AiFillHeart, AiFillStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 import "./BookMarkItem.scss";
-function BookMarkItem() {
+function BookMarkItem({data}) {
   const [isLiked, setLiked] = useState(false);
 
   const handleLiked = (e) => {
@@ -13,17 +13,17 @@ function BookMarkItem() {
   return (
     <>
       <Animated animationIn="fadeInUp" className="bookmark__item">
-        <Link to="/detail/khach-san-vung-tau" className="bookmark__link">
+        <Link to={`/detail/${data.slug}`} className="bookmark__link">
           <img
             className="bookmark__img"
-            src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+            src= {data.mainImage}
             alt=""
           />
         </Link>
         <div className="bookmark__infor">
           <div className="infor__header">
-            <p className="infor__name">Aura house</p>
-            <p className="infor__national">VietNam</p>
+            <p className="infor__name">{data.name}</p>
+            <p className="infor__national">{data.national}</p>
           </div>
           <div className="infor__body">
             <Animated
@@ -45,7 +45,7 @@ function BookMarkItem() {
               className="body__star"
             >
               <AiFillStar className="icon__star" />
-              <span>4.9</span>
+              <span>{data.star}</span>
             </Animated>
           </div>
         </div>

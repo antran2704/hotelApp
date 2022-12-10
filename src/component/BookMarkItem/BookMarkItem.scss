@@ -41,10 +41,20 @@
       justify-content: space-around;
       width: 100%;
     }
+
+    .infor__header {
+      width: 70%;
+    }
     .infor__name {
+      display: block;
+      display: -webkit-box;
       font-size: 1.8rem;
       font-weight: 500;
       color: black;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
     .infor__national {
       font-size: 1.6rem;

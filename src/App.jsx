@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import routes from "./routes";
 import DefaultLayout from "./layouts/DefaultLayout";
 import WithoutNavbarLayout from "./layouts/WithoutNavbarLayout";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function App() {
   return (

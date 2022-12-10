@@ -3,8 +3,9 @@ import "./HomePage.scss";
 import HomeContent from "../../component/HomeContent";
 import { Animated } from "react-animated-css";
 
-function HomePage() {
 
+function HomePage() {
+ 
   return (
     <section className="p-x h-cus home">
       <NavbarHeader />

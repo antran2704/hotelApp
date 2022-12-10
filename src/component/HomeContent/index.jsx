@@ -1,7 +1,9 @@
-import { useState } from "react";
 import Slider from "react-slick";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import "react-loading-skeleton/dist/skeleton.css";
 
-
+import { getAllHotel } from "../../store/actions";
 
 import "./HomeContent.scss";
 import HomeItem from "./HomeItem";
@@ -18,15 +20,24 @@ const settings = {
 };
 
 function HomeContent() {
+  const dispatch = useDispatch();
+  const { allHotel } = useSelector((state) => state.data);
+
+  useEffect(() => {
+    getAllHotel(dispatch);
+  }, [dispatch]);
 
   return (
     <div className="home__list">
       <Slider {...settings}>
-        <HomeItem />
-        <HomeItem />
-        <HomeItem />
-        <HomeItem />
-        <HomeItem />
+        {allHotel.length > 0 ? (
+          allHotel.map((item) => <HomeItem key={item._id} data={item} />)
+        ) : (
+          <>
+            <HomeItem />
+            <HomeItem />
+          </>
+        )}
       </Slider>
     </div>
   );

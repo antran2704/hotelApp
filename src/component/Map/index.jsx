@@ -4,6 +4,7 @@ import {
   DirectionsService,
   DirectionsRenderer,
   Autocomplete,
+  Marker,
 } from "@react-google-maps/api";
 import { AiFillCar } from "react-icons/ai";
 import { BiCurrentLocation, BiCycling } from "react-icons/bi";
@@ -12,16 +13,33 @@ import { FaWalking } from "react-icons/fa";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 import { Wrapper } from "@googlemaps/react-wrapper";
+import Geocode from "react-geocode";
 
 import "./Map.scss";
 import ButtonBack from "../Button/ButtonBack";
+import { useEffect } from "react";
+import { getAHotel } from "../../store/actions";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 function Map() {
+  Geocode.setApiKey("AIzaSyBIQHBJd-xgtAFWAtRueCKFMqHqqXUs2p4");
+  Geocode.setLanguage("vi");
+  Geocode.setRegion("vn");
+
+  const params = useParams();
+  const dispatch = useDispatch();
+  const { aHotel } = useSelector((state) => state.data);
+
   const [response, setResponse] = useState(null);
   const [travelMode, setTravelMode] = useState("DRIVING");
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
   const [showControl, setShowControl] = useState(true);
+  const [center, setCenter] = useState({
+    lat: 10.82855724431953,
+    lng: 106.68062705751575,
+  });
 
   const originRef = useRef(null);
   const destinationRef = useRef(null);
@@ -47,14 +65,7 @@ function Map() {
     height: "100%",
   };
 
-  const center = {
-    lat: 10.82855724431953,
-    lng: 106.68062705751575,
-  };
-
   const directionsCallback = (response) => {
-    console.log(response);
-
     if (response !== null) {
       if (response.status === "OK") {
         setResponse(response);
@@ -87,9 +98,34 @@ function Map() {
     }
   };
 
+  useEffect(() => {
+    navigator?.geolocation.getCurrentPosition(
+      ({ coords: { latitude: lat, longitude: lng } }) => {
+        const pos = { lat, lng };
+        setCenter(pos);
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    if (params.name) {
+      getAHotel(dispatch, params.name);
+      setDestination(aHotel.address);
+      Geocode.fromLatLng("10.8157638", "106.6785122").then(
+        (response) => {
+          const address = response.results[0].formatted_address;
+          setOrigin(address);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    }
+  }, [dispatch, params.name, aHotel.address]);
+
   return (
     <div className="map">
-      <ButtonBack />
+      <ButtonBack left={10}/>
       <div className="map__open" onClick={hanldeShowInputControl}>
         <IoIosArrowUp className="map__icon-arrow" />
       </div>
@@ -102,8 +138,8 @@ function Map() {
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
-            zoom={10}
-            defaultZomm={11}
+            zoom={16}
+            defaultZomm={10}
             options={{
               fullscreenControl: false,
               zoomControl: false,
@@ -137,13 +173,25 @@ function Map() {
               <div className="input__item">
                 <HiLocationMarker className="map__icon" />
                 <Autocomplete className="input__inp">
-                  <input type="text" ref={destinationRef} placeholder = "Nhập địa điểm nơi đến"/>
+                  <input
+                    type="text"
+                    ref={destinationRef}
+                    placeholder="Nhập địa điểm nơi đến"
+                    value={destination}
+                    onChange={(e) => setDestination(e.target.value)}
+                  />
                 </Autocomplete>
               </div>
               <div className="input__item">
                 <BiCurrentLocation className="map__icon" />
                 <Autocomplete className="input__inp">
-                  <input type="text" ref={originRef} placeholder = "Nhập địa điểm của bạn"/>
+                  <input
+                    type="text"
+                    ref={originRef}
+                    placeholder="Nhập địa điểm của bạn"
+                    value={origin}
+                    onChange={(e) => setOrigin(e.target)}
+                  />
                 </Autocomplete>
               </div>
               <div className="select__wrap">
@@ -166,6 +214,7 @@ function Map() {
                 Build route
               </button>
             </div>
+            <Marker key={1} position={center} />
           </GoogleMap>
         </Wrapper>
       </div>
