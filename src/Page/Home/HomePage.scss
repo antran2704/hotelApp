@@ -20,34 +20,6 @@
   .home__category {
     position: relative;
 
-    // &::after {
-    //   content: "";
-    //   position: absolute;
-    //   width: 30px;
-    //   height: 70%;
-    //   top: 50%;
-    //   left: -20px;
-    //   background-color: rgba(255, 255, 255, 0.1);
-    //   backdrop-filter: blur(10px);
-    //   border-radius: 0 4px 4px 0;
-    //   transform: translateY(-50%);
-    //   z-index: 2;
-    // }
-
-    // &::before {
-    //   content: "";
-    //   position: absolute;
-    //   width: 30px;
-    //   height: 70%;
-    //   top: 50%;
-    //   right: -20px;
-    //   background-color: rgba(255, 255, 255, 0.1);
-    //   backdrop-filter: blur(10px);
-    //   border-radius: 4px 0 0 4px;
-    //   transform: translateY(-50%);
-    //   z-index: 2;
-    // }
-
     .category__list {
       display: flex;
       align-items: center;
@@ -76,5 +48,14 @@
         }
       }
     }
+  }
+}
+
+.App.dark {
+  .header__subtitle {
+    color: white;
+  }
+  .header__title {
+    color: white;
   }
 }

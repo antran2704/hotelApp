@@ -27,3 +27,11 @@
     gap: 10px;
   }
 }
+
+
+.App.dark {
+  .navbar__user,
+  .navbar__icon {
+    color: white;
+  }
+}

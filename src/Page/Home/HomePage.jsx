@@ -5,7 +5,6 @@ import { Animated } from "react-animated-css";
 
 
 function HomePage() {
- 
   return (
     <section className="p-x h-cus home">
       <NavbarHeader />

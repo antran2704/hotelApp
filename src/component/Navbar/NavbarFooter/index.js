@@ -1,6 +1,6 @@
 import { AiFillHome } from "react-icons/ai";
 import { BsFillBookmarkFill } from "react-icons/bs";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaUser } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md"
 
 const items = [
@@ -23,6 +23,11 @@ const items = [
         icon: BsFillBookmarkFill,
         path: "/bookmark",
         name: "bookmark"
+    },
+    {
+        icon: FaUser,
+        path: "/user",
+        name: "user"
     },
 ];
 

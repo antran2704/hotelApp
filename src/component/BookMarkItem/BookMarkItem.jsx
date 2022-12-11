@@ -1,24 +1,48 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { Animated } from "react-animated-css";
 import { AiOutlineHeart, AiFillHeart, AiFillStar } from "react-icons/ai";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import "./BookMarkItem.scss";
-function BookMarkItem({data}) {
+import { handleLikeHotel, handleUnLikeHotel } from "../../store/actions";
+
+function BookMarkItem({ data }) {
+  const { user } = useSelector((state) => state.data);
+
   const [isLiked, setLiked] = useState(false);
 
-  const handleLiked = (e) => {
-    setLiked(!isLiked);
+  const handleLiked = () => {
+    if (!isLiked) {
+      setLiked(true);
+      handleLikeHotel({
+        userId: user._id,
+        hotelId: data._id,
+      });
+    } else {
+      setLiked(false);
+      handleUnLikeHotel({
+        userId: user._id,
+        hotelId: data._id,
+      });
+    }
   };
+
+  useEffect(() => {
+    if (user?._id) {
+      const isLike = user.liked.find((item) => {
+        return item._id === data._id ? true : false;
+      });
+
+      setLiked(isLike);
+    }
+  }, [data, user]);
   return (
     <>
       <Animated animationIn="fadeInUp" className="bookmark__item">
         <Link to={`/detail/${data.slug}`} className="bookmark__link">
-          <img
-            className="bookmark__img"
-            src= {data.mainImage}
-            alt=""
-          />
+          <img className="bookmark__img" src={data.mainImage} alt="" />
         </Link>
         <div className="bookmark__infor">
           <div className="infor__header">

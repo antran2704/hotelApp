@@ -32,6 +32,12 @@ $primary-color: #70a1ff;
   }
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html {
   font-size: 62.5%;
   font-family: "Poppins", sans-serif;
@@ -40,10 +46,8 @@ html {
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
   @include scroll;
+  transition: all linear 0.2s;
 }
 
 h1,
@@ -71,6 +75,10 @@ button {
   padding: 0;
 }
 
+button {
+  cursor: pointer;
+}
+
 a {
   display: block;
   color: black;
@@ -85,6 +93,25 @@ img {
   object-position: center;
 }
 
+.App {
+  &.dark {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    a {
+      color: white;
+    }
+
+    .content {
+      background-color: #252527;
+    }
+  }
+}
+
 .container {
   max-width: 600px;
   margin: 0 auto;
@@ -96,6 +123,7 @@ img {
   background-color: whitesmoke;
   box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.6);
   border-radius: 30px;
+  transition: all linear 0.2s;
 }
 
 .h-cus {
@@ -114,7 +142,7 @@ img {
   z-index: 10;
 
   .back__icon {
-    font-size: 3rem;
+    font-size: 5rem;
     color: $primary-color;
     background-color: rgba(218, 224, 219, 1);
     padding: 10px;
@@ -135,12 +163,12 @@ img {
   }
 }
 
-
 // animation loading
 @keyframes spinner {
   from {
     transform: rotate(0deg);
-  } to {
+  }
+  to {
     transform: rotate(360deg);
   }
 }

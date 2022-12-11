@@ -1,17 +1,28 @@
-import { AiOutlineBell} from "react-icons/ai";
+import { useEffect } from "react";
+import { useState } from "react";
+import { AiOutlineBell } from "react-icons/ai";
+import { useSelector } from "react-redux";
 
 import "./NavbarHeader.scss";
 
 function NavbarHeader() {
+  const { user } = useSelector((state) => state.data);
+
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    if (user?._id) {
+      setUserName(user.name);
+    }
+  }, [user]);
   return (
     <nav className="navbar__header">
       <div className="navbar__left">
         <h3 className="navbar__user">
-            Hello, Antran
+          {userName.length > 0 && `Hello, ${userName}😊`}
         </h3>
       </div>
       <div className="navbar__right">
-        {/* <AiOutlineSearch className="navbar__icon navbar__icon-search" /> */}
         <AiOutlineBell className="navbar__icon" />
       </div>
     </nav>

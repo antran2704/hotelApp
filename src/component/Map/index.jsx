@@ -126,8 +126,8 @@ function Map() {
   return (
     <div className="map">
       <ButtonBack left={10}/>
-      <div className="map__open" onClick={hanldeShowInputControl}>
-        <IoIosArrowUp className="map__icon-arrow" />
+      <div className={`map__open ${!showControl && 'show'}`} onClick={hanldeShowInputControl}>
+        <IoIosArrowUp className="map__icon-arrow map__arrow-up"/>
       </div>
 
       <div className="map__body">

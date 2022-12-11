@@ -5,7 +5,11 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaLocationArrow } from "react-icons/fa";
 import { Animated } from "react-animated-css";
 
-import { getAHotel } from "../../store/actions";
+import {
+  handleLikeHotel,
+  handleUnLikeHotel,
+  getAHotel,
+} from "../../store/actions";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,12 +19,24 @@ import ButtonBack from "../../component/Button/ButtonBack";
 function Detail() {
   const params = useParams();
   const dispatch = useDispatch();
-  const { aHotel } = useSelector((state) => state.data);
+  const { aHotel, user } = useSelector((state) => state.data);
   const [isLiked, setLiked] = useState(false);
   const [urlImg, setUrl] = useState("");
 
   const handleLiked = () => {
-    setLiked(!isLiked);
+    if (!isLiked) {
+      setLiked(true);
+      handleLikeHotel({
+        userId: user._id,
+        hotelId: aHotel._id,
+      });
+    } else {
+      setLiked(false);
+      handleUnLikeHotel({
+        userId: user._id,
+        hotelId: aHotel._id,
+      });
+    }
   };
 
   const getUrlImg = (e) => {
@@ -45,6 +61,16 @@ function Detail() {
       setUrl(aHotel.mainImage);
     }
   }, [dispatch, params.name, aHotel._id, aHotel.mainImage]);
+
+  useEffect(() => {
+    if (user?._id) {
+      const isLike = user.liked.find((item) => {
+        return item._id === aHotel._id ? true : false;
+      });
+
+      setLiked(isLike);
+    }
+  }, [aHotel, user]);
   return (
     <div className="p-x detail">
       <Animated animationIn="fadeInUp" className="detail__header">

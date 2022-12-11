@@ -1,26 +1,45 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineHeart, AiFillHeart, AiFillStar } from "react-icons/ai";
 import { Animated } from "react-animated-css";
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import "./HomeContent.scss";
+import { handleLikeHotel, handleUnLikeHotel } from "../../store/actions";
+
 
 function HomeItem({data}) {
+  const { user } = useSelector((state) => state.data)
   const [isLiked, setLiked] = useState(false);
-  const [loading, setLoading] = useState(true);
 
-  const handleLiked = (e) => {
-    setLiked(!isLiked);
+  const handleLiked = () => {
+    if(!isLiked) {
+      setLiked(true);
+      handleLikeHotel({
+        userId: user._id,
+        hotelId: data._id
+      })
+    } else {
+      setLiked(false);
+      handleUnLikeHotel({
+        userId: user._id,
+        hotelId: data._id
+      })
+    }
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false)
-    },1000)
-  },[])
+    if(data && user?._id) {
+      const isLike = user.liked.find((item) => {
+        return item._id === data._id ? true : false
+      });
+  
+      setLiked(isLike);
+    }
+  },[data, user])
 
   return (
     <div className="home__item">
@@ -62,7 +81,7 @@ function HomeItem({data}) {
               </div>
               <div className="home__content-rate">
                 <AiFillStar className="icon__star" />
-                <span>4.9</span>
+                <span>{data.star}</span>
               </div>
             </Animated>
           </div>

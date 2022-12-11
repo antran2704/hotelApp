@@ -19,13 +19,14 @@ function SearchPage() {
   const navigate = useNavigate();
   const useQuery = () => new URLSearchParams(useLocation().search);
 
-  console.log()
-
   const dispatch = useDispatch();
   const query = useQuery().get("q");
+  const city = useQuery().get("city");
   const { searchHotel, loadingSearch } = useSelector((state) => state.data);
 
   const [searchValue, setSearchValue] = useState("");
+  const [selectValue, setSelectValue] = useState("");
+  const [noResult, setNoResult] = useState(false);
 
   const handleSearch = (e) => {
     const value = e.target.value
@@ -46,31 +47,41 @@ function SearchPage() {
 
   const handleClearSearch = () => {
     setSearchValue("");
+    setSelectValue("");
     navigate(`/search`);
     dispatch({
       type: SEARCH__START_LOADING,
     });
-    // handleSearchHotel(dispatch, query);
-  }
+  };
 
   const handleSelect = (e) => {
-    const value = e.target.value;
-    if(query) {
-      navigate(`/search?q=${query}&city=${value}`);
-    } else {
-      navigate(`/search?city=${value}`);
-    }
-  }
+    const city = e.target.value;
+    setSelectValue(city);
+    navigate(`/search?q=${query}&city=${city}`);
+    dispatch({
+      type: SEARCH__START_LOADING,
+    });
+  };
 
+  // call api when query or city change
   useEffect(() => {
     const timmer = setTimeout(() => {
-      handleSearchHotel(dispatch, query);
+      if (city) {
+        handleSearchHotel(dispatch, query, city);
+      } else {
+        handleSearchHotel(dispatch, query);
+      }
     }, 1400);
 
     return () => {
       clearTimeout(timmer);
     };
-  }, [dispatch, query]);
+  }, [dispatch, query, city]);
+
+  // check value api return to show message
+  useEffect(() => {
+    query && searchHotel.length === 0 ? setNoResult(true) : setNoResult(false);
+  }, [searchHotel])
 
   useLayoutEffect(() => {
     dispatch({
@@ -105,23 +116,28 @@ function SearchPage() {
           <div className="select__option-item">
             <select
               name="city"
-              className="select__option"
+              className={`select__option ${
+                searchValue.length === 0 && "disable"
+              }`}
+              value={selectValue}
               onChange={handleSelect}
             >
               <option value="" className="option__item">
                 Thành phố
               </option>
               <option value="Vũng Tàu" className="option__item">
-                Sai Gon
+                Vũng Tàu
+              </option>
+              <option value="Hồ Chí Minh" className="option__item">
+                Hồ Chí Minh
               </option>
             </select>
           </div>
         </div>
       </div>
 
-      {/* {searchHotel.length === 0  && <h1>Ô ồ hình như không tìm thấy kết quả</h1>} */}
-
-      {searchHotel.length > 0 && !loadingSearch && <BookMarkList />}
+      {noResult && <p className="search__result">Ô ồ hình như không tìm thấy kết quả 🙄</p>}
+      {searchHotel.length > 0 && !loadingSearch && <BookMarkList data={searchHotel}/>}
 
       {loadingSearch && (
         <div className="search__loading">

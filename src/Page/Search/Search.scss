@@ -71,11 +71,19 @@
 
   .select__option {
     flex: 1;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: 500;
     color: black;
     padding: 8px 12px;
     border-radius: 8px;
+    pointer-events: initial;
+    opacity: 1;
+    transition: all linear 0.2s;
+
+    &.disable {
+      opacity: 0.6;
+      pointer-events: none;
+    }
 
     .option__item {
       font-size: 1.8rem;
@@ -96,4 +104,12 @@
     font-size: 3rem;
     animation: spinner linear 0.8s infinite;
   }
+}
+
+.search__result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 2.4rem;
 }

@@ -1,13 +1,27 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+
+import "react-loading-skeleton/dist/skeleton.css";
 
 import routes from "./routes";
 import DefaultLayout from "./layouts/DefaultLayout";
 import WithoutNavbarLayout from "./layouts/WithoutNavbarLayout";
-import "react-loading-skeleton/dist/skeleton.css";
+import { DARK_MODE } from "./store/type";
 
 function App() {
+  const dispatch = useDispatch();
+  const { darkMode } = useSelector((state) => state.data)
+  const localDarkmode = JSON.parse(localStorage.getItem("darkmode"));
+
+  useEffect(() => {
+    dispatch({
+      type: DARK_MODE,
+      payload: localDarkmode
+    })
+  },[dispatch, localDarkmode])
   return (
-    <div className="App">
+    <div className={`App ${darkMode && 'dark'}`}>
       <Router>
         <Routes>
           {routes.map((route, index) => {

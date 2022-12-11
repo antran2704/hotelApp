@@ -5,6 +5,9 @@ import MapPage from "../Page/Map/MapPage";
 import PopularPage from "../Page/Popular/PopularPage";
 import RecommendPage from "../Page/Recommend/RecommendPage";
 import SearchPage from "../Page/Search/SearchPage";
+import SettingPage from "../Page/Setting/SettingPage";
+import LoginPage from "../Page/Form/LoginPage";
+import SignUpPage from "../Page/Form/SignUpPage";
 
 const routes = [
   {
@@ -46,6 +49,21 @@ const routes = [
     path: "/search",
     component: SearchPage,
     layout: "default"
+  },
+  {
+    path: "/user",
+    component: SettingPage,
+    layout: "default"
+  },
+  {
+    path: "/login",
+    component: LoginPage,
+    layout: null
+  },
+  {
+    path: "/signup",
+    component: SignUpPage,
+    layout: null
   },
 ];
 
