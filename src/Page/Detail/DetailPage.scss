@@ -75,8 +75,42 @@
       font-size: 1.6rem;
       font-weight: 400;
 
-      p {
-        margin-bottom: 14%;
+      .detail__service-title {
+        font-size: 1.8rem;
+        font-weight: 500;
+        color: $primary-color;
+        margin: 20px 0;
+      }
+
+      .detail__services {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        width: 100%;
+        margin-bottom: 100px;
+        overflow-x: auto;
+        @include scroll;
+        gap: 20px;
+        -webkit-column-gap: 20px;
+
+        @include cus(770px) {
+          @include scrollHidden;
+        }
+      }
+
+      .services__item {
+        min-width: fit-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .services__icon {
+        font-size: 2rem;
+        color: black;
+      }
+      .services__title {
+        font-size: 1.6rem;
       }
     }
   }
@@ -89,6 +123,7 @@
     bottom: 0;
     left: 50%;
     width: 100%;
+    padding: 10px 0;
     background-color: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(4px);
     transform: translateX(-50%);
@@ -145,5 +180,12 @@
         gap: 10px;
       }
     }
+  }
+}
+
+
+.App.dark {
+  .services__icon {
+    color: white;
   }
 }

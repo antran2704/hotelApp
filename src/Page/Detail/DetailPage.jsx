@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BsFillTelephoneFill } from "react-icons/bs";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { FaLocationArrow } from "react-icons/fa";
+import { AiOutlineHeart, AiFillHeart, AiOutlineWifi } from "react-icons/ai";
+import { FaLocationArrow, FaUtensils, FaSwimmingPool } from "react-icons/fa";
+import { GiElevator } from "react-icons/gi";
 import { Animated } from "react-animated-css";
 
 import {
@@ -107,6 +108,43 @@ function Detail() {
               animationInDelay={1400}
             >
               <p>{aHotel.description}</p>
+              <p className="detail__service-title">Dịch vụ</p>
+              <div className="detail__services">
+                {aHotel.services.airCondition && (
+                  <div className="services__item">
+                    <FaUtensils className="services__icon" />
+                    <p className="services__title">Máy lạnh</p>
+                  </div>
+                )}
+
+                {aHotel.services.swimmingPool && (
+                  <div className="services__item">
+                    <FaSwimmingPool className="services__icon" />
+                    <p className="services__title">Hồ bơi</p>
+                  </div>
+                )}
+
+                {aHotel.services.restaurant && (
+                  <div className="services__item">
+                    <FaUtensils className="services__icon" />
+                    <p className="services__title">Nhà hàng</p>
+                  </div>
+                )}
+
+                {aHotel.services.wifi && (
+                  <div className="services__item">
+                    <AiOutlineWifi className="services__icon" />
+                    <p className="services__title">Wifi</p>
+                  </div>
+                )}
+
+                {aHotel.services.lift && (
+                  <div className="services__item">
+                    <GiElevator className="services__icon" />
+                    <p className="services__title">Thang máy</p>
+                  </div>
+                )}
+              </div>
             </Animated>
           </section>
           <footer className="detail__footer">
