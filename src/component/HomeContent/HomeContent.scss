@@ -41,10 +41,13 @@
     overflow: hidden;
     transform: scale(1);
     transition: all linear 0.2s;
-    // scroll-snap-align: center;
-    // min-width: 90%;
 
     .animated {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .lazy-load-image-background {
       width: 100%;
       height: 100%;
     }
@@ -63,7 +66,7 @@
       left: 0;
       right: 0;
       padding: 20px;
-      background-color: rgba(0,0,0,0.1);
+      background-color: rgba(0, 0, 0, 0.2);
 
       .home__content-link {
         position: absolute;
@@ -92,9 +95,15 @@
         justify-content: space-between;
       }
       .home__content-name {
+        display: block;
+        display: -webkit-box;
         font-size: 2rem;
         font-weight: bold;
         color: white;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
       .home__content-location {
         font-size: 1.6rem;

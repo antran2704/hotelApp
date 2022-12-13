@@ -59,9 +59,15 @@
       }
     }
 
-    .map__duration {
-      font-size: 1.6rem;
-      font-weight: 500;
+    .map__detail {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+
+      .map__duration {
+        font-size: 1.6rem;
+        font-weight: 500;
+      }
     }
 
     .input__item {

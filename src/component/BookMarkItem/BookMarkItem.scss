@@ -1,38 +1,36 @@
 @import "../../index.scss";
 
 .bookmark__body {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 48%);
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   height: 70%;
   overflow-x: hidden;
   gap: 20px;
   @include scrollHidden;
 
   @include cus(500px) {
+    grid-template-columns: repeat(1, 100%);
     scroll-snap-type: y mandatory;
   }
 
   .bookmark__item {
     display: flex;
     flex-direction: column;
-    height: 80%;
-    width: 46%;
+    height: 300px;
+    margin-bottom: 30px;
     border-radius: 30px;
     background-color: #dadada;
     overflow: hidden;
 
     @include cus(500px) {
       width: 100%;
-      scroll-snap-align: center;
+      scroll-snap-align: start;
     }
 
     .bookmark__link {
       height: 70%;
-
-      .bookmark__img {
-      }
     }
     .bookmark__infor {
       flex: 1;

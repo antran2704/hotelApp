@@ -1,11 +1,13 @@
 import {
   GET_USER,
   GET_ALL_HOTEL,
+  GET_POPULAR_HOTEL,
+  GET_RECOMEND_HOTEL,
   GET_A_HOTEL,
   SEARCH_HOTEL,
   SEARCH__START_LOADING,
   SEARCH__FALSE_LOADING,
-  DARK_MODE
+  DARK_MODE,
 } from "./type";
 
 const initialState = {
@@ -14,7 +16,7 @@ const initialState = {
   aHotel: {},
   searchHotel: [],
   loadingSearch: false,
-  darkMode: false
+  darkMode: false,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -26,6 +28,18 @@ const rootReducer = (state = initialState, action) => {
       };
     }
     case GET_ALL_HOTEL: {
+      return {
+        ...state,
+        allHotel: [...action.payload],
+      };
+    }
+    case GET_POPULAR_HOTEL: {
+      return {
+        ...state,
+        allHotel: [...action.payload],
+      };
+    }
+    case GET_RECOMEND_HOTEL: {
       return {
         ...state,
         allHotel: [...action.payload],

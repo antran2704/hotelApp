@@ -2,6 +2,8 @@ import httpRequest from "../ultils";
 import {
   GET_USER,
   GET_ALL_HOTEL,
+  GET_POPULAR_HOTEL,
+  GET_RECOMEND_HOTEL,
   GET_A_HOTEL,
   SEARCH_HOTEL,
   SEARCH__FALSE_LOADING,
@@ -45,6 +47,30 @@ export const getAllHotel = async (dispatch) => {
     });
   } catch (error) {
     console.log(error, "false get all hotel");
+  }
+};
+
+export const getPopularHotel = async (dispatch) => {
+  try {
+    const data = await httpRequest.get("/hotel/popular");
+    dispatch({
+      type: GET_POPULAR_HOTEL,
+      payload: data.data,
+    });
+  } catch (error) {
+    console.log(error, "false get popular hotel");
+  }
+};
+
+export const getRecomendHotel = async (dispatch) => {
+  try {
+    const data = await httpRequest.get("/hotel/recomend");
+    dispatch({
+      type: GET_RECOMEND_HOTEL,
+      payload: data.data,
+    });
+  } catch (error) {
+    console.log(error, "false get popular hotel");
   }
 };
 

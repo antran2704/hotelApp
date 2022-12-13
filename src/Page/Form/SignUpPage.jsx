@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   AiFillEye,
   AiFillEyeInvisible,
@@ -9,6 +9,7 @@ import {
 
 import "./Form.scss";
 import httpRequest from "../../ultils";
+import { Animated } from "react-animated-css";
 
 function SignUpPage() {
   const navigate = useNavigate();
@@ -37,7 +38,6 @@ function SignUpPage() {
 
     if (showError) {
       setPassword("");
-      console.log(showError);
     }
   };
 
@@ -103,11 +103,17 @@ function SignUpPage() {
 
   return (
     <div className="h-cus p-x login">
-      <h1 className="login__title">Sign Up</h1>
-      <p className="login__desc">Sign up your account!!!</p>
+      <Animated animationIn="zoomIn">
+        <h1 className="login__title">Sign Up</h1>
+        <p className="login__desc">Sign up your account!!!</p>
+      </Animated>
 
       <div className="login__content">
-        <div className="login__content-item">
+        <Animated
+          animationIn="fadeInUp"
+          animationInDelay={1200}
+          className="login__content-item"
+        >
           <span className="item__title">User name</span>
           <input
             className="login__inp"
@@ -122,8 +128,12 @@ function SignUpPage() {
             onBlur={(e) => handleCheckUserName(e)}
           />
           {nameError && <p className="login__error">User name exit😕</p>}
-        </div>
-        <div className="login__content-item">
+        </Animated>
+        <Animated
+          animationIn="fadeInUp"
+          animationInDelay={1400}
+          className="login__content-item"
+        >
           <span className="item__title">Password</span>
           <div className="login__inp-wrap">
             <input
@@ -150,8 +160,12 @@ function SignUpPage() {
           {showError && (
             <p className="login__error">Password must be than 6 characters</p>
           )}
-        </div>
-        <div className="login__content-item">
+        </Animated>
+        <Animated
+          animationIn="fadeInUp"
+          animationInDelay={1600}
+          className="login__content-item"
+        >
           <span className="item__title">Confirm password</span>
           <div className="login__inp-wrap">
             <input
@@ -172,18 +186,31 @@ function SignUpPage() {
               ref={passwordConfirmRef}
             />
           </div>
-        </div>
+        </Animated>
         {showErrorConfirm && (
           <p className="login__error">Password confirm incorrect🥲</p>
         )}
       </div>
-      <button className="login__btn" onClick={handleSignUp}>
-        {isLoading ? (
-          <AiOutlineLoading3Quarters className="login__btn-loading" />
-        ) : (
-          "Sign Up"
-        )}
-      </button>
+
+      <Animated
+        animationIn="zoomIn"
+        animationInDelay={1800}
+        animationInDuration={1200}
+      >
+        <button className="login__btn" onClick={handleSignUp}>
+          {isLoading ? (
+            <AiOutlineLoading3Quarters className="login__btn-loading" />
+          ) : (
+            "Sign Up"
+          )}
+        </button>
+        <p className="login__redirect">
+          Already a member?
+          <Link to={"/login"} className="login__redirec-link">
+            Login
+          </Link>
+        </p>
+      </Animated>
     </div>
   );
 }

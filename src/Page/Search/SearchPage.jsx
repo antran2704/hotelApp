@@ -29,6 +29,7 @@ function SearchPage() {
   const [noResult, setNoResult] = useState(false);
 
   const handleSearch = (e) => {
+    setNoResult(false);
     const value = e.target.value
       .normalize("NFD")
       .toLowerCase()
@@ -88,7 +89,7 @@ function SearchPage() {
       type: SEARCH__START_LOADING,
     });
     handleSearchHotel(dispatch, query);
-  }, []);
+  }, [query]);
 
   return (
     <div className="h-cus p-x search">

@@ -1,3 +1,5 @@
+@import "../../../index.scss";
+
 .navbar__header {
   display: flex;
   align-items: center;
@@ -9,6 +11,10 @@
       font-size: 2rem;
       font-weight: 600;
       color: black;
+
+      @include cus(400px) {
+        font-size: 1.6rem;
+      }
     }
   }
 

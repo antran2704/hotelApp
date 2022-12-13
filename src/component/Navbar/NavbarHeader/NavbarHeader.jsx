@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { AiOutlineBell } from "react-icons/ai";
 import { useSelector } from "react-redux";
+import { Animated } from "react-animated-css";
 
 import "./NavbarHeader.scss";
 
@@ -18,9 +19,13 @@ function NavbarHeader() {
   return (
     <nav className="navbar__header">
       <div className="navbar__left">
-        <h3 className="navbar__user">
+        <Animated
+          animationIn="zoomIn"
+          animationInDelay={600}
+          className="navbar__user"
+        >
           {userName.length > 0 && `Hello, ${userName}😊`}
-        </h3>
+        </Animated>
       </div>
       <div className="navbar__right">
         <AiOutlineBell className="navbar__icon" />

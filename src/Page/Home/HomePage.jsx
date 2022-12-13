@@ -1,10 +1,18 @@
-import NavbarHeader from "../../component/Navbar/NavbarHeader/NavbarHeader";
-import "./HomePage.scss";
-import HomeContent from "../../component/HomeContent";
 import { Animated } from "react-animated-css";
+import { useState } from "react";
 
+import NavbarHeader from "../../component/Navbar/NavbarHeader/NavbarHeader";
+import HomeContent from "../../component/HomeContent";
+import listCategory from "./index";
+
+import "./HomePage.scss";
 
 function HomePage() {
+  const [category, setCategory] = useState("all");
+
+  const handleCategory = (value) => {
+    setCategory(value);
+  };
   return (
     <section className="p-x h-cus home">
       <NavbarHeader />
@@ -20,25 +28,18 @@ function HomePage() {
 
       <div className="home__category">
         <ul className="category__list">
-          <Animated animationIn="fadeInRight" isVisible={true}>
-            <li className="category__item">
-              <a href="/">New</a>
-            </li>
-          </Animated>
-          <Animated animationIn="fadeInRight" isVisible={true}>
-            <li className="category__item">
-              <a href="/">Popular</a>
-            </li>
-          </Animated>
-          <Animated animationIn="fadeInRight" isVisible={true}>
-            <li className="category__item">
-              <a href="/">Recommend</a>
-            </li>
-          </Animated>
+          {listCategory.map((item, index) => (
+            <Animated animationIn="fadeInRight" isVisible={true} key={index}>
+              <li
+                className={`category__item ${category === item.value && "active"}`}>
+                <p onClick={() => handleCategory(item.value)}>{item.title}</p>
+              </li>
+            </Animated>
+          ))}
         </ul>
       </div>
 
-      <HomeContent />
+      <HomeContent category={category} />
     </section>
   );
 }

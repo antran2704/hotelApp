@@ -38,13 +38,30 @@
 
       .category__item {
         scroll-snap-align: end;
-        a {
+
+        &:hover {
+          p {
+            color: white;
+            background-color: $primary-color;
+          }
+        }
+
+        &.active {
+          p {
+            color: white;
+            background-color: $primary-color;
+          }
+        }
+        p {
           font-size: 1.6rem;
           font-weight: normal;
-          color: white;
-          background-color: $primary-color;
+          color: $primary-color;
+          background-color: transparent;
           padding: 6px 20px;
           border-radius: 30px;
+          border: 1.4px solid $primary-color;
+          transition: all linear 0.2s;
+          cursor: pointer;
         }
       }
     }

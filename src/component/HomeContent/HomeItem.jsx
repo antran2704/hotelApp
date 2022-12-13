@@ -4,52 +4,54 @@ import { Animated } from "react-animated-css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import "./HomeContent.scss";
 import { handleLikeHotel, handleUnLikeHotel } from "../../store/actions";
 
-
-function HomeItem({data}) {
-  const { user } = useSelector((state) => state.data)
+function HomeItem({ data }) {
+  const { user } = useSelector((state) => state.data);
   const [isLiked, setLiked] = useState(false);
 
   const handleLiked = () => {
-    if(!isLiked) {
+    if (!isLiked) {
       setLiked(true);
       handleLikeHotel({
         userId: user._id,
-        hotelId: data._id
-      })
+        hotelId: data._id,
+      });
     } else {
       setLiked(false);
       handleUnLikeHotel({
         userId: user._id,
-        hotelId: data._id
-      })
+        hotelId: data._id,
+      });
     }
   };
 
   useEffect(() => {
-    if(data && user?._id) {
+    if (data && user?._id) {
       const isLike = user.liked.find((item) => {
-        return item._id === data._id ? true : false
+        return item._id === data._id ? true : false;
       });
-  
+
       setLiked(isLike);
     }
-  },[data, user])
+  }, [data, user]);
 
   return (
     <div className="home__item">
       {!data ? (
-        <Skeleton height={"100%"}/>
+        <SkeletonTheme baseColor="#e2e5e7" highlightColor="#f5f5f5">
+          <Skeleton height={"100%"} />
+        </SkeletonTheme>
       ) : (
         <Animated animationIn="zoomIn">
-          <img
-            src= {data.mainImage}
-            alt="item"
+          <LazyLoadImage
+            src={data.mainImage}
+            alt={data.name}
+            effect="blur"
             className="home__img"
           />
           <div className="home__content">

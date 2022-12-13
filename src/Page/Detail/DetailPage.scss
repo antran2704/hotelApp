@@ -14,16 +14,21 @@
     height: 50%;
     margin: 20px 0;
 
+    & > .lazy-load-image-background {
+      width: 100%;
+      height: 70%;
+    }
+
     .header__img {
       border-radius: 20px;
-      height: 70%;
+      height: 100%;
     }
     .header__list {
       display: flex;
       flex-wrap: nowrap;
       align-items: flex-start;
       width: 100%;
-      height: 30%;
+      height: 40%;
       padding: 10px 0;
       overflow-y: hidden;
       overflow-x: overlay;
@@ -49,8 +54,14 @@
       overflow: hidden;
       cursor: pointer;
 
-      img {
+      .lazy-load-image-background {
+        width: 100%;
+        height: 100%;
         border-radius: 20px;
+        overflow: hidden;
+      }
+
+      img {
         transition: all linear 0.2s;
       }
     }
@@ -71,15 +82,60 @@
       font-weight: 500;
       color: $primary-color;
     }
+    .detail__address {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+      gap: 10px;
+      -webkit-column-gap: 10px;
+
+      .detail__address-icon {
+        font-size: 2.6rem;
+        min-width: 30px;
+        color: $primary-color;
+      }
+      p {
+        font-size: 1.4rem;
+        font-weight: 500;
+      }
+    }
     .detail__desc {
       font-size: 1.6rem;
       font-weight: 400;
+
+      .detail__desc-wrap {
+        p {
+          height: 96px;
+          overflow: hidden;
+          transition: all linear 0.2s;
+        }
+
+        .detail__desc-btn {
+          font-weight: 500;
+          color: $primary-color;
+          cursor: pointer;
+        }
+      }
+
+      .detail__room {
+        .detail__room-item {
+          margin-top: 10px;
+
+          span {
+            font-weight: 500;
+            color: $primary-color;
+          }
+        }
+        .detail__room-area {
+        }
+      }
 
       .detail__service-title {
         font-size: 1.8rem;
         font-weight: 500;
         color: $primary-color;
-        margin: 20px 0;
+        margin: 20px 0 10px;
       }
 
       .detail__services {
@@ -183,9 +239,10 @@
   }
 }
 
-
 .App.dark {
-  .services__icon {
-    color: white;
+  .detail__desc {
+    .services__icon {
+      color: white;
+    }
   }
 }

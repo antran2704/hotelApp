@@ -109,6 +109,27 @@
         transform: rotate(360deg);
     }
   }
+
+  .login__redirect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #e5e5e5;
+    gap: 10px;
+    -webkit-column-gap: 10px;
+
+    .login__redirec-link {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: $primary-color;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 

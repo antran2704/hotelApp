@@ -41,6 +41,9 @@ function Map() {
     lng: 106.68062705751575,
   });
 
+  const [distance, setDistance] = useState("0km");
+  const [duration, setDuration] = useState("0h");
+
   const originRef = useRef(null);
   const destinationRef = useRef(null);
   const mapInputRef = useRef(null);
@@ -68,6 +71,9 @@ function Map() {
   const directionsCallback = (response) => {
     if (response !== null) {
       if (response.status === "OK") {
+        console.log(response);
+        setDistance(response.routes[0].legs[0].distance.text);
+        setDuration(response.routes[0].legs[0].duration.text);
         setResponse(response);
       } else {
         console.log("response: ", response);
@@ -125,9 +131,12 @@ function Map() {
 
   return (
     <div className="map">
-      <ButtonBack left={10}/>
-      <div className={`map__open ${!showControl && 'show'}`} onClick={hanldeShowInputControl}>
-        <IoIosArrowUp className="map__icon-arrow map__arrow-up"/>
+      <ButtonBack left={10} />
+      <div
+        className={`map__open ${!showControl && "show"}`}
+        onClick={hanldeShowInputControl}
+      >
+        <IoIosArrowUp className="map__icon-arrow map__arrow-up" />
       </div>
 
       <div className="map__body">
@@ -169,7 +178,10 @@ function Map() {
               <div className="map__close" onClick={hanldeShowInputControl}>
                 <IoIosArrowDown className="map__icon-arrow" />
               </div>
-              <p className="map__duration">2,5km</p>
+              <div className="map__detail">
+                <p className="map__duration">{distance}</p>
+                <p className="map__duration">{duration}</p>
+              </div>
               <div className="input__item">
                 <HiLocationMarker className="map__icon" />
                 <Autocomplete className="input__inp">
