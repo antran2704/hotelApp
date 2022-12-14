@@ -25,6 +25,7 @@ function SignUpPage() {
   const [showError, setShowError] = useState(false);
   const [showErrorConfirm, setShowErrorConfirm] = useState(false);
   const [nameError, setNameError] = useState(false);
+  const [nameErrorMessage, setMessage] = useState("")
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -48,6 +49,7 @@ function SignUpPage() {
       const nameUser = await httpRequest.post("/user/checkNameUser", { name });
       if (nameUser.data._id) {
         setNameError(true);
+        setMessage('User name exit');
         el.classList.add("error");
         el.classList.remove("success");
       } else {
@@ -74,7 +76,7 @@ function SignUpPage() {
     }
   };
 
-  const handleCheckConfirmPassword = (value) => {
+  const handleCheckConfirmPassword = () => {
     const el = passwordConfirmRef.current;
     if (el.value.length > 0) {
       if (passwordRef.current.value !== el.value) {
@@ -90,7 +92,27 @@ function SignUpPage() {
   };
 
   const handleSignUp = async () => {
-    if (!showError && !showErrorConfirm && !nameError) {
+    if(userRef.current.value.length === 0) {
+      setNameError(true);
+      setMessage('Field is required');
+      return;
+    }
+
+    if(passwordRef.current.value.length === 0) {
+      setShowError(true);
+      return;
+    }
+
+    if(passwordConfirmRef.current.value.length === 0) {
+      setShowErrorConfirm(true);
+      return;
+    }
+
+    if (
+      userRef.current.value.length > 0 &&
+      passwordRef.current.value.length > 0 &&
+      passwordConfirmRef.current.value.length > 0
+    ) {
       setLoading(true);
       await httpRequest.post("/user/add", {
         name: userRef.current.value,
@@ -127,7 +149,7 @@ function SignUpPage() {
             }}
             onBlur={(e) => handleCheckUserName(e)}
           />
-          {nameError && <p className="login__error">User name exit😕</p>}
+          {nameError && <p className="login__error">{nameErrorMessage}😕</p>}
         </Animated>
         <Animated
           animationIn="fadeInUp"

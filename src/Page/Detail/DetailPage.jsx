@@ -84,10 +84,10 @@ function Detail({ scrollPosition }) {
   useEffect(() => {
     getAHotel(dispatch, params.name);
 
-    if (aHotel._id) {
+    if (aHotel._id && aHotel.slug === params.name) {
       setUrl(aHotel.mainImage);
     }
-  }, [dispatch, params.name, aHotel._id, aHotel.mainImage]);
+  }, [dispatch, params.name, aHotel._id, aHotel.mainImage, aHotel.slug]);
 
   useEffect(() => {
     if (user?._id) {
@@ -119,7 +119,7 @@ function Detail({ scrollPosition }) {
               <Animated
                 key={index}
                 animationIn="zoomIn"
-                animationInDelay={1000 + index * 8}
+                animationInDelay={1000 + (index * 8)}
               >
                 <li className="header__item">
                   <LazyLoadImage
