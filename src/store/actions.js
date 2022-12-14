@@ -7,6 +7,8 @@ import {
   GET_A_HOTEL,
   SEARCH_HOTEL,
   SEARCH__FALSE_LOADING,
+  MODAL_ANNOUNCE,
+  TOKEN,
 } from "./type";
 
 // User Action
@@ -111,3 +113,18 @@ export const handleSearchHotel = async (dispatch, slug, city) => {
     });
   }
 };
+
+export const handleModalAnnounce = (dispatch, value) => {
+  dispatch({
+    type: MODAL_ANNOUNCE,
+    payload: value
+  })
+}
+
+// localStorage
+export const getToken = (dispatch,token) => {
+  dispatch({
+    type: TOKEN,
+    payload: token
+  })
+}

@@ -31,7 +31,7 @@ function SettingPage() {
   };
 
   const handleLogout = () => {
-    localStorage.setItem("token", null);
+    localStorage.setItem("token", JSON.stringify(null));
     navigate("/login")
   }
 

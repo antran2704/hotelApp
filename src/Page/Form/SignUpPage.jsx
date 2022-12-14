@@ -94,7 +94,7 @@ function SignUpPage() {
       setLoading(true);
       await httpRequest.post("/user/add", {
         name: userRef.current.value,
-        password: passwordRef.current.value,
+        password: passwordRef.current.value.toLowerCase(),
       });
       setLoading(false);
       navigate("/login");

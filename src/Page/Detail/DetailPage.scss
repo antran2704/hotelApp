@@ -44,6 +44,9 @@
     .animated {
       min-width: 40%;
       height: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all linear 0.2s;
     }
 
     .header__item {

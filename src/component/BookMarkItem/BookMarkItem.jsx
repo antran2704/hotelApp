@@ -2,18 +2,23 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Animated } from "react-animated-css";
 import { AiOutlineHeart, AiFillHeart, AiFillStar } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import "./BookMarkItem.scss";
-import { handleLikeHotel, handleUnLikeHotel } from "../../store/actions";
+import { handleLikeHotel, handleUnLikeHotel, handleModalAnnounce } from "../../store/actions";
 
 function BookMarkItem({ data }) {
-  const { user } = useSelector((state) => state.data);
+  const dispatch = useDispatch();
+  const { user, token } = useSelector((state) => state.data);
 
   const [isLiked, setLiked] = useState(false);
 
   const handleLiked = () => {
+    if (token === null) {
+      handleModalAnnounce(dispatch, true);
+      return;
+    }
     if (!isLiked) {
       setLiked(true);
       handleLikeHotel({

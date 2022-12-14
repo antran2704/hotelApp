@@ -8,6 +8,8 @@ import {
   SEARCH__START_LOADING,
   SEARCH__FALSE_LOADING,
   DARK_MODE,
+  MODAL_ANNOUNCE,
+  TOKEN,
 } from "./type";
 
 const initialState = {
@@ -15,8 +17,10 @@ const initialState = {
   allHotel: [],
   aHotel: {},
   searchHotel: [],
+  token: null,
   loadingSearch: false,
   darkMode: false,
+  modalAnnounce: false,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -76,6 +80,20 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         darkMode: action.payload,
+      };
+    }
+
+    case MODAL_ANNOUNCE: {
+      return {
+        ...state,
+        modalAnnounce: action.payload,
+      };
+    }
+
+    case TOKEN: {
+      return {
+        ...state,
+        token: action.payload,
       };
     }
 

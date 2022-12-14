@@ -8,4 +8,14 @@
     padding: 10px 0;
     text-align: center;
   }
+
+  .bookmark__desc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 70%;
+    font-size: 1.8rem;
+    font-weight: 500;
+  }
 }

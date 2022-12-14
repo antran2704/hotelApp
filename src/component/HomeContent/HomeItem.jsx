@@ -2,19 +2,29 @@ import { useState } from "react";
 import { AiOutlineHeart, AiFillHeart, AiFillStar } from "react-icons/ai";
 import { Animated } from "react-animated-css";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import "./HomeContent.scss";
-import { handleLikeHotel, handleUnLikeHotel } from "../../store/actions";
+import {
+  handleLikeHotel,
+  handleUnLikeHotel,
+  handleModalAnnounce,
+} from "../../store/actions";
 
 function HomeItem({ data }) {
-  const { user } = useSelector((state) => state.data);
+  const dispatch = useDispatch();
+  const { user, token } = useSelector((state) => state.data);
+
   const [isLiked, setLiked] = useState(false);
 
   const handleLiked = () => {
+    if (token === null) {
+      handleModalAnnounce(dispatch, true);
+      return;
+    }
     if (!isLiked) {
       setLiked(true);
       handleLikeHotel({

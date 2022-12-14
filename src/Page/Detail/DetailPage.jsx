@@ -6,28 +6,28 @@ import { FaLocationArrow, FaUtensils, FaSwimmingPool } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import { GiElevator } from "react-icons/gi";
 import { Animated } from "react-animated-css";
-
-import {
-  handleLikeHotel,
-  handleUnLikeHotel,
-  getAHotel,
-} from "../../store/actions";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
-import "./DetailPage.scss";
-import ButtonBack from "../../component/Button/ButtonBack";
 import {
   LazyLoadImage,
   trackWindowScroll,
 } from "react-lazy-load-image-component";
 import Skeleton from "react-loading-skeleton";
 
+import "./DetailPage.scss";
+import {
+  handleLikeHotel,
+  handleUnLikeHotel,
+  getAHotel,
+  handleModalAnnounce
+} from "../../store/actions";
+import ButtonBack from "../../component/Button/ButtonBack";
+
 function Detail({ scrollPosition }) {
   const params = useParams();
 
   const dispatch = useDispatch();
-  const { aHotel, user } = useSelector((state) => state.data);
+  const { aHotel, user, token } = useSelector((state) => state.data);
 
   const descRef = useRef(null);
 
@@ -36,6 +36,10 @@ function Detail({ scrollPosition }) {
   const [urlImg, setUrl] = useState("");
 
   const handleLiked = () => {
+    if (token === null) {
+      handleModalAnnounce(dispatch, true);
+      return;
+    }
     if (!isLiked) {
       setLiked(true);
       handleLikeHotel({
@@ -56,13 +60,14 @@ function Detail({ scrollPosition }) {
     clearTimeout(timmer);
 
     const el = e.target;
-    el.style.transform = "scale(0.9)";
+    const animateEl = e.target.closest(".animated");
+    animateEl.style.transform = "scale(0.9)";
     const newUrl = el.src;
 
     timmer = setTimeout(() => {
       el.src = urlImg;
       setUrl(newUrl);
-      el.style.transform = "scale(1)";
+      animateEl.style.transform = "scale(1)";
     }, 100);
   };
 
