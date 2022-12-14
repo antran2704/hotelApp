@@ -29,7 +29,6 @@ function LoginPage() {
   const handlePassword = (value) => {
     setShowError(false);
     setPassword(value);
-    console.log(passwordRef.current.value.toLowerCase())
   };
 
   const handleLogin = async () => {
@@ -37,7 +36,7 @@ function LoginPage() {
 
     const data = {
       name: userRef.current.value,
-      password: passwordRef.current.valuetoLowerCase(),
+      password: passwordRef.current.value.toLowerCase(),
     };
 
     try {
