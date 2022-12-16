@@ -3,8 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 import "react-loading-skeleton/dist/skeleton.css";
-// mapbox css
-import 'mapbox-gl/dist/mapbox-gl.css';
 
 import routes from "./routes";
 import DefaultLayout from "./layouts/DefaultLayout";
