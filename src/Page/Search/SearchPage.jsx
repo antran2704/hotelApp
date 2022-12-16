@@ -58,7 +58,12 @@ function SearchPage() {
   const handleSelect = (e) => {
     const city = e.target.value;
     setSelectValue(city);
-    navigate(`/search?q=${query}&city=${city}`);
+    
+    if(city.length > 0) {
+      navigate(`/search?q=${query}&city=${city}`);
+    } else {
+      navigate(`/search?q=${query}`);
+    }
     dispatch({
       type: SEARCH__START_LOADING,
     });
@@ -82,7 +87,7 @@ function SearchPage() {
   // check value api return to show message
   useEffect(() => {
     query && searchHotel.length === 0 ? setNoResult(true) : setNoResult(false);
-  }, [searchHotel])
+  }, [searchHotel]);
 
   useLayoutEffect(() => {
     dispatch({
@@ -129,16 +134,23 @@ function SearchPage() {
               <option value="Vũng Tàu" className="option__item">
                 Vũng Tàu
               </option>
-              <option value="Hồ Chí Minh" className="option__item">
-                Hồ Chí Minh
+              <option value="Đà Lạt" className="option__item">
+                Đà Lạt
+              </option>
+              <option value="Buôn Mê Thuột" className="option__item">
+                Buôn Mê Thuột
               </option>
             </select>
           </div>
         </div>
       </div>
 
-      {noResult && <p className="search__result">Ô ồ hình như không tìm thấy kết quả 🙄</p>}
-      {searchHotel.length > 0 && !loadingSearch && <BookMarkList data={searchHotel}/>}
+      {noResult && (
+        <p className="search__result">Ô ồ hình như không tìm thấy kết quả 🙄</p>
+      )}
+      {searchHotel.length > 0 && !loadingSearch && (
+        <BookMarkList data={searchHotel} />
+      )}
 
       {loadingSearch && (
         <div className="search__loading">

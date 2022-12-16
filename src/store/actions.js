@@ -59,6 +59,10 @@ export const getPopularHotel = async (dispatch) => {
       type: GET_POPULAR_HOTEL,
       payload: data.data,
     });
+    dispatch({
+      type: SEARCH__FALSE_LOADING,
+      value: false
+    })
   } catch (error) {
     console.log(error, "false get popular hotel");
   }
@@ -71,6 +75,10 @@ export const getRecomendHotel = async (dispatch) => {
       type: GET_RECOMEND_HOTEL,
       payload: data.data,
     });
+    dispatch({
+      type: SEARCH__FALSE_LOADING,
+      value: false
+    })
   } catch (error) {
     console.log(error, "false get popular hotel");
   }

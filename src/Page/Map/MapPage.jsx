@@ -1,7 +1,7 @@
-import Map from "../../component/Map";
+import MapBox from "../../component/Map/map";
 
 function MapPage() {
-  return <Map />;
+  return <MapBox />;
 }
 
 export default MapPage;

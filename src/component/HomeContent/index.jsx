@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 
+import { SEARCH__START_LOADING } from "../../store/type";
 import {
   getAllHotel,
   getPopularHotel,
@@ -25,13 +26,23 @@ const settings = {
 
 function HomeContent({ category }) {
   const dispatch = useDispatch();
-  const { allHotel } = useSelector((state) => state.data);
+  const { allHotel, loadingSearch } = useSelector((state) => state.data);
 
   useEffect(() => {
     if (category === "popular") {
+      dispatch({
+        type: SEARCH__START_LOADING,
+        value: true,
+      });
+
       getPopularHotel(dispatch);
     }
     if (category === "recomend") {
+      dispatch({
+        type: SEARCH__START_LOADING,
+        value: true,
+      });
+
       getRecomendHotel(dispatch);
     } else {
       getAllHotel(dispatch);
@@ -41,7 +52,7 @@ function HomeContent({ category }) {
   return (
     <div className="home__list">
       <Slider {...settings}>
-        {allHotel.length > 0 ? (
+        {allHotel.length > 0 && !loadingSearch ? (
           allHotel.map((item) => <HomeItem key={item._id} data={item} />)
         ) : (
           <>

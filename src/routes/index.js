@@ -6,6 +6,7 @@ import SearchPage from "../Page/Search/SearchPage";
 import SettingPage from "../Page/Setting/SettingPage";
 import LoginPage from "../Page/Form/LoginPage";
 import SignUpPage from "../Page/Form/SignUpPage";
+import PageNotFound from "../Page/404/PageNotFound";
 
 const routes = [
   {
@@ -23,6 +24,11 @@ const routes = [
     component: BookmarkPage,
     layout: "default"
   },
+  // {
+  //   path: "/location",
+  //   component: MapPage,
+  //   layout: "default"
+  // },
   {
     path: "/location",
     component: MapPage,
@@ -51,6 +57,11 @@ const routes = [
   {
     path: "/signup",
     component: SignUpPage,
+    layout: null
+  },
+  {
+    path: "*",
+    component: PageNotFound,
     layout: null
   },
 ];

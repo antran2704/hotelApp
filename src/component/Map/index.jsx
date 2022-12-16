@@ -202,7 +202,7 @@ function Map() {
                     ref={originRef}
                     placeholder="Nhập địa điểm của bạn"
                     value={origin}
-                    onChange={(e) => setOrigin(e.target)}
+                    onChange={(e) => setOrigin(e.target.value)}
                   />
                 </Autocomplete>
               </div>
