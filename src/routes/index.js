@@ -24,11 +24,6 @@ const routes = [
     component: BookmarkPage,
     layout: "default"
   },
-  // {
-  //   path: "/location",
-  //   component: MapPage,
-  //   layout: "default"
-  // },
   {
     path: "/location",
     component: MapPage,
