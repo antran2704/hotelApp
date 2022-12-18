@@ -4,7 +4,6 @@ import {
   DirectionsService,
   DirectionsRenderer,
   Autocomplete,
-  Marker,
 } from "@react-google-maps/api";
 import { AiFillCar } from "react-icons/ai";
 import { BiCurrentLocation, BiCycling } from "react-icons/bi";
@@ -23,7 +22,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 function Map() {
-  Geocode.setApiKey("AIzaSyBIQHBJd-xgtAFWAtRueCKFMqHqqXUs2p4");
+  Geocode.setApiKey(process.env.REACT_APP_MAP_API);
   Geocode.setLanguage("vi");
   Geocode.setRegion("vn");
 
@@ -37,8 +36,8 @@ function Map() {
   const [destination, setDestination] = useState("");
   const [showControl, setShowControl] = useState(true);
   const [center, setCenter] = useState({
-    lat: 10.82855724431953,
-    lng: 106.68062705751575,
+    lat: 10.8225079,
+    lng: 106.6880955,
   });
 
   const [distance, setDistance] = useState("0km");
@@ -71,7 +70,6 @@ function Map() {
   const directionsCallback = (response) => {
     if (response !== null) {
       if (response.status === "OK") {
-        console.log(response);
         setDistance(response.routes[0].legs[0].distance.text);
         setDuration(response.routes[0].legs[0].duration.text);
         setResponse(response);
@@ -90,6 +88,7 @@ function Map() {
     const destination = destinationRef.current.value;
     setOrigin(origin);
     setDestination(destination);
+    hanldeShowInputControl();
   };
 
   const hanldeShowInputControl = () => {
@@ -140,15 +139,12 @@ function Map() {
       </div>
 
       <div className="map__body">
-        <Wrapper
-          apiKey="AIzaSyBIQHBJd-xgtAFWAtRueCKFMqHqqXUs2p4"
-          libraries={["places"]}
-        >
+        <Wrapper apiKey={process.env.REACT_APP_MAP_API} libraries={["places"]}>
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
             zoom={16}
-            defaultZomm={10}
+            defaultZomm={14}
             options={{
               fullscreenControl: false,
               zoomControl: false,
@@ -226,7 +222,6 @@ function Map() {
                 Build route
               </button>
             </div>
-            <Marker key={1} position={center} />
           </GoogleMap>
         </Wrapper>
       </div>
