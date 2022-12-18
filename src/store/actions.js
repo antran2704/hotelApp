@@ -8,6 +8,7 @@ import {
   SEARCH_HOTEL,
   SEARCH__FALSE_LOADING,
   MODAL_ANNOUNCE,
+  MODAL_SETTING,
   TOKEN,
 } from "./type";
 
@@ -122,9 +123,17 @@ export const handleSearchHotel = async (dispatch, slug, city) => {
   }
 };
 
+//modal 
 export const handleModalAnnounce = (dispatch, value) => {
   dispatch({
     type: MODAL_ANNOUNCE,
+    payload: value
+  })
+}
+
+export const handleModalSetting = (dispatch, value) => {
+  dispatch({
+    type: MODAL_SETTING,
     payload: value
   })
 }

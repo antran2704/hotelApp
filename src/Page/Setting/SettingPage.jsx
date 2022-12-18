@@ -5,6 +5,8 @@ import { FiLogOut, FiLogIn } from "react-icons/fi";
 import "./Setting.scss";
 
 import { DARK_MODE } from "../../store/type";
+import { handleModalSetting } from "../../store/actions";
+import ModalSetting from "../../component/Modal/ModalSetting";
 
 function SettingPage() {
   const navigate = useNavigate();
@@ -35,6 +37,10 @@ function SettingPage() {
     navigate("/login")
   }
 
+  const handleModal = (value) => {
+    handleModalSetting(dispatch,value);
+  }
+
   return (
     <div className="h-cus p-x setting">
       <h1 className="setting__title">Setting</h1>
@@ -48,14 +54,14 @@ function SettingPage() {
                 <span className="infor__title">Username</span>
                 <p className="infor__value">{user.name}</p>
               </div>
-              <button className="list__item-btn">Edit</button>
+              <button className="list__item-btn" onClick={() => handleModal({isOpen: true, type: "userName"})}>Edit</button>
             </li>
             <li className="list__item">
               <div className="list__item-infor">
                 <span className="infor__title">Password</span>
                 <p className="infor__value">******</p>
               </div>
-              <button className="list__item-btn">Edit</button>
+              <button className="list__item-btn" onClick={() => handleModal({isOpen: true, type: "password"})}>Edit</button>
             </li>
           </ul>
         )}
@@ -86,6 +92,8 @@ function SettingPage() {
           </button>
         )}
       </div>
+
+      <ModalSetting />
     </div>
   );
 }

@@ -9,6 +9,7 @@ import {
   SEARCH__FALSE_LOADING,
   DARK_MODE,
   MODAL_ANNOUNCE,
+  MODAL_SETTING,
   TOKEN,
 } from "./type";
 
@@ -21,6 +22,10 @@ const initialState = {
   loadingSearch: false,
   darkMode: false,
   modalAnnounce: false,
+  modalSetting: {
+    isOpen: false,
+    type: ""
+  }
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -87,6 +92,13 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         modalAnnounce: action.payload,
+      };
+    }
+
+    case MODAL_SETTING: {
+      return {
+        ...state,
+        modalSetting: action.payload,
       };
     }
 

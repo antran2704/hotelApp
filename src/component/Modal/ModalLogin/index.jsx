@@ -2,8 +2,8 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import "./Modal.scss";
-import { handleModalAnnounce } from "../../store/actions";
+import "../Modal.scss";
+import { handleModalAnnounce } from "../../../store/actions";
 
 function Modal() {
     const dispatch = useDispatch();

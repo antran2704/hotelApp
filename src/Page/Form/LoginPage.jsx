@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   AiFillEye,
@@ -8,52 +7,57 @@ import {
 } from "react-icons/ai";
 
 import "./Form.scss";
-import httpRequest from "../../ultils";
 import { Animated } from "react-animated-css";
+import { checkUser } from "../../helper";
 
 function LoginPage() {
   const navigate = useNavigate();
 
-  const userRef = useRef(null);
-  const passwordRef = useRef(null);
+  const inital = {
+    userName: "",
+    password: ""
+  }
 
+  const [formValues, setFormValues] = useState(inital);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [password, setPassword] = useState("");
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const handlePassword = (value) => {
+  const handleInput = (element) => {
+    const {value, name} = element;
+
     setShowError(false);
-    setPassword(value);
+    setFormValues({...formValues, [name]: value})
   };
 
   const handleLogin = async () => {
     setLoading(true);
 
-    const data = {
-      name: userRef.current.value,
-      password: passwordRef.current.value.toLowerCase(),
-    };
+    const name = formValues.userName;
+    const password = formValues.password;
 
-    try {
-      const token = await httpRequest.post("/user/check", data);
-      if (token.data === "user not exit") {
-        localStorage.setItem("token", JSON.stringify(token.data));
-        setLoading(false);
-        setPassword("");
-        setShowError(true);
-      } else {
-        localStorage.setItem("token", JSON.stringify(token.data));
-        setLoading(false);
-        navigate("/");
-      }
-    } catch (error) {
-      console.log(error, "false check user");
+    const token = await checkUser(name, password);
+
+    // catch if error on server
+    if (token === "error on server") {
+      alert("error on server");
       setLoading(false);
+      return;
+    }
+
+    if (token === "user not exit") {
+      localStorage.setItem("token", JSON.stringify(token));
+      setLoading(false);
+      setFormValues({...formValues, password: ""});
+      setShowError(true);
+    } else {
+      localStorage.setItem("token", JSON.stringify(token));
+      setLoading(false);
+      navigate("/");
     }
   };
 
@@ -73,9 +77,11 @@ function LoginPage() {
           <span className="item__title">User name</span>
           <input
             className="login__inp"
+            name="userName"
+            value={formValues.userName}
             type="text"
             placeholder="Enter your user name..."
-            ref={userRef}
+            onChange={(e) => handleInput(e.target)}
           />
         </Animated>
         <Animated
@@ -87,11 +93,11 @@ function LoginPage() {
           <div className="login__inp-wrap">
             <input
               className="login__inp"
+              name="password"
               type={`${showPassword ? "text" : "password"}`}
-              value={password}
-              onChange={(e) => handlePassword(e.target.value)}
+              value={formValues.password}
+              onChange={(e) => handleInput(e.target)}
               placeholder="Enter your password..."
-              ref={passwordRef}
             />
             {showPassword ? (
               <AiFillEyeInvisible

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   AiFillEye,
@@ -10,113 +9,130 @@ import {
 import "./Form.scss";
 import httpRequest from "../../ultils";
 import { Animated } from "react-animated-css";
+import {
+  checkConfirmPassword,
+  checkPassword,
+  checkUserName,
+} from "../../helper";
 
 function SignUpPage() {
   const navigate = useNavigate();
 
-  const userRef = useRef(null);
-  const passwordRef = useRef(null);
-  const passwordConfirmRef = useRef(null);
+  const initial = {
+    userName: "",
+    password: "",
+    confirmPassword: "",
+  };
 
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
+  const [formValues, setFormValues] = useState(initial);
+
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const [showErrorConfirm, setShowErrorConfirm] = useState(false);
   const [nameError, setNameError] = useState(false);
-  const [nameErrorMessage, setMessage] = useState("")
+  const [nameErrorMessage, setMessage] = useState("");
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const handlePassword = (value) => {
-    passwordRef.current.classList.remove("error");
-    setPassword(value);
-    setShowErrorConfirm(false);
-    setShowError(false);
+  const handleInput = (element) => {
+    const { value, name } = element;
 
-    if (showError) {
-      setPassword("");
+    element.classList.remove("error");
+    element.classList.remove("success");
+
+    if (
+      (showError || showErrorConfirm) &&
+      (name === "password" || name === "confirmPassword")
+    ) {
+      setShowErrorConfirm(false);
+      setShowError(false);
+      setFormValues({ ...formValues, [name]: "" });
+      return;
     }
+
+    setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleCheckUserName = async (e) => {
-    const name = e.target.value;
-    const el = e.target;
-    if (name.length > 0) {
-      const nameUser = await httpRequest.post("/user/checkNameUser", { name });
-      if (nameUser.data._id) {
+  const handleCheckUserName = async (element) => {
+    const { value } = element;
+
+    if (value.length > 0) {
+      const user = await checkUserName(value);
+
+      if (user) {
+        element.classList.add("error");
+        element.classList.remove("success");
         setNameError(true);
-        setMessage('User name exit');
-        el.classList.add("error");
-        el.classList.remove("success");
+        setMessage("User name exit");
       } else {
+        element.classList.add("success");
+        element.classList.remove("error");
         setNameError(false);
-        el.classList.add("success");
-        el.classList.remove("error");
       }
     }
   };
 
-  const handleCheckPassword = () => {
-    const el = passwordRef.current;
+  const handleCheckPassword = (element) => {
+    const { value } = element;
+    const isError = checkPassword(value);
 
-    if (el.value.length > 0) {
-      if (el.value.length < 6) {
-        setShowError(true);
-        el.classList.add("error");
-        el.classList.remove("success");
-      } else {
-        setShowError(false);
-        el.classList.remove("error");
-        el.classList.add("success");
-      }
+    if (!isError) {
+      element.classList.add("error");
+      element.classList.remove("success");
+      setShowError(true);
+    } else {
+      element.classList.remove("error");
+      element.classList.add("success");
+      setShowError(false);
     }
   };
 
-  const handleCheckConfirmPassword = () => {
-    const el = passwordConfirmRef.current;
-    if (el.value.length > 0) {
-      if (passwordRef.current.value !== el.value) {
-        setShowErrorConfirm(true);
-        el.classList.remove("success");
-        el.classList.add("error");
-      } else {
-        setShowErrorConfirm(false);
-        el.classList.remove("error");
-        el.classList.add("success");
-      }
+  const handleCheckConfirmPassword = (element) => {
+    const { password, confirmPassword } = formValues;
+
+    const isError = checkConfirmPassword(password, confirmPassword);
+
+    if (!isError) {
+      element.classList.remove("success");
+      element.classList.add("error");
+      setShowErrorConfirm(true);
+    } else {
+      element.classList.remove("error");
+      element.classList.add("success");
+      setShowErrorConfirm(false);
     }
   };
 
   const handleSignUp = async () => {
-    if(userRef.current.value.length === 0) {
+    const { userName, password ,confirmPassword} = formValues;
+    if (userName.length === 0) {
       setNameError(true);
-      setMessage('Field is required');
+      setMessage("Field is required");
       return;
     }
 
-    if(passwordRef.current.value.length === 0) {
+    if (password.length === 0) {
       setShowError(true);
       return;
     }
 
-    if(passwordConfirmRef.current.value.length === 0) {
+    if (confirmPassword.length === 0) {
       setShowErrorConfirm(true);
       return;
     }
 
     if (
-      userRef.current.value.length > 0 &&
-      passwordRef.current.value.length > 0 &&
-      passwordConfirmRef.current.value.length > 0
+      userName.length > 0 &&
+      password.length > 0 &&
+      confirmPassword.length > 0
     ) {
       setLoading(true);
       await httpRequest.post("/user/add", {
-        name: userRef.current.value,
-        password: passwordRef.current.value.toLowerCase(),
+        name: userName,
+        password: password.toLowerCase(),
       });
       setLoading(false);
       navigate("/login");
@@ -140,14 +156,14 @@ function SignUpPage() {
           <input
             className="login__inp"
             type="text"
+            name="userName"
+            value={formValues.userName}
             placeholder="Enter your user name..."
-            ref={userRef}
             onChange={(e) => {
               setNameError(false);
-              e.target.classList.remove("error");
-              e.target.classList.remove("success");
+              handleInput(e.target);
             }}
-            onBlur={(e) => handleCheckUserName(e)}
+            onBlur={(e) => handleCheckUserName(e.target)}
           />
           {nameError && <p className="login__error">{nameErrorMessage}😕</p>}
         </Animated>
@@ -160,12 +176,12 @@ function SignUpPage() {
           <div className="login__inp-wrap">
             <input
               className="login__inp"
+              name="password"
               type={`${showPassword ? "text" : "password"}`}
-              value={password}
-              onChange={(e) => handlePassword(e.target.value)}
-              onBlur={handleCheckPassword}
+              value={formValues.password}
+              onChange={(e) => handleInput(e.target)}
+              onBlur={(e) => handleCheckPassword(e.target)}
               placeholder="Enter your password..."
-              ref={passwordRef}
             />
             {showPassword ? (
               <AiFillEyeInvisible
@@ -192,20 +208,11 @@ function SignUpPage() {
           <div className="login__inp-wrap">
             <input
               className="login__inp"
+              name="confirmPassword"
               type={`${showPassword ? "text" : "password"}`}
-              value={confirm}
-              onChange={(e) => {
-                passwordConfirmRef.current.classList.remove("success");
-                passwordConfirmRef.current.classList.remove("error");
-                setConfirm(e.target.value);
-
-                if (showErrorConfirm) {
-                  setConfirm("");
-                }
-                setShowErrorConfirm(false);
-              }}
-              onBlur={handleCheckConfirmPassword}
-              ref={passwordConfirmRef}
+              value={formValues.confirmPassword}
+              onChange={(e) => handleInput(e.target)}
+              onBlur={(e) => handleCheckConfirmPassword(e.target)}
             />
           </div>
         </Animated>

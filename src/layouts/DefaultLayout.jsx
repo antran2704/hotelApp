@@ -6,7 +6,7 @@ import NavbarFooter from "../component/Navbar/NavbarFooter/NavbarFooter";
 import "./layout.scss";
 
 import { getUser, handleModalAnnounce, getToken} from "../store/actions";
-import Modal from "../component/Modal/Modal";
+import Modal from "../component/Modal/ModalLogin";
 
 function DefaultLayout({ children }) {
   const dispatch = useDispatch();

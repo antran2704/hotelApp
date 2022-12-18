@@ -13,7 +13,7 @@ const SEARCH__FALSE_LOADING = "searchFalseLoading";
 
 // Modal
 const MODAL_ANNOUNCE = "modalAnnounce";
-
+const MODAL_SETTING = "modalSetting";
 
 // localStorage
 const TOKEN = 'token'
@@ -29,5 +29,6 @@ export {
   SEARCH__FALSE_LOADING,
   DARK_MODE,
   MODAL_ANNOUNCE,
+  MODAL_SETTING,
   TOKEN
 };
