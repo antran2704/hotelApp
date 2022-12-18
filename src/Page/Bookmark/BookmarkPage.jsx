@@ -19,13 +19,7 @@ function BookmarkPage() {
 
       {!contentLoading && user?._id && user.liked.length > 0 ? (
         <BookMarkList data={user.liked} />
-      ) : (
-        <div className="bookmark__loading">
-          <AiOutlineLoading3Quarters className="bookmark__loading-icon" />
-        </div>
-      )}
-
-      {token === null && (
+      ) : token === null ? (
         <Animated
           animationIn="fadeInUp"
           animationInDelay={600}
@@ -33,6 +27,10 @@ function BookmarkPage() {
         >
           Ố ồ hình như bạn chưa đăng nhập🧐
         </Animated>
+      ) : (
+        <div className="bookmark__loading">
+          <AiOutlineLoading3Quarters className="bookmark__loading-icon" />
+        </div>
       )}
     </div>
   );
