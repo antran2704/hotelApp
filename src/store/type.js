@@ -10,13 +10,15 @@ const GET_A_HOTEL = "getAHotel";
 const SEARCH_HOTEL = "searchHotel";
 const SEARCH__START_LOADING = "searchSuccessLoading";
 const SEARCH__FALSE_LOADING = "searchFalseLoading";
+const CONTENT__START_LOADING = "contentSuccessLoading";
+const CONTENT__FALSE_LOADING = "contentFalseLoading";
 
 // Modal
 const MODAL_ANNOUNCE = "modalAnnounce";
 const MODAL_SETTING = "modalSetting";
 
 // localStorage
-const TOKEN = 'token'
+const TOKEN = "token";
 
 export {
   GET_USER,
@@ -27,8 +29,10 @@ export {
   SEARCH_HOTEL,
   SEARCH__START_LOADING,
   SEARCH__FALSE_LOADING,
+  CONTENT__START_LOADING,
+  CONTENT__FALSE_LOADING,
   DARK_MODE,
   MODAL_ANNOUNCE,
   MODAL_SETTING,
-  TOKEN
+  TOKEN,
 };

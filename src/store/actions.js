@@ -7,19 +7,29 @@ import {
   GET_A_HOTEL,
   SEARCH_HOTEL,
   SEARCH__FALSE_LOADING,
+  CONTENT__START_LOADING,
+  CONTENT__FALSE_LOADING,
   MODAL_ANNOUNCE,
   MODAL_SETTING,
   TOKEN,
 } from "./type";
 
 // User Action
-export const getUser = async (dispatch,token) => {
+export const getUser = async (dispatch, token) => {
+  dispatch({
+    type: CONTENT__START_LOADING,
+  });
+
   try {
     const user = await httpRequest.get(`/user/getUser/${token}`);
     dispatch({
       type: GET_USER,
       payload: user.data,
-    })
+    });
+
+    dispatch({
+      type: CONTENT__FALSE_LOADING,
+    });
   } catch (error) {
     console.log(error, "false get user");
   }
@@ -27,7 +37,7 @@ export const getUser = async (dispatch,token) => {
 
 export const handleLikeHotel = async (data) => {
   try {
-   await httpRequest.post(`/user/like`, data);
+    await httpRequest.post(`/user/like`, data);
   } catch (error) {
     console.log(error, "false like hotel");
   }
@@ -35,7 +45,7 @@ export const handleLikeHotel = async (data) => {
 
 export const handleUnLikeHotel = async (data) => {
   try {
-   await httpRequest.post(`/user/unlike`, data);
+    await httpRequest.post(`/user/unlike`, data);
   } catch (error) {
     console.log(error, "false unlike hotel");
   }
@@ -54,32 +64,40 @@ export const getAllHotel = async (dispatch) => {
 };
 
 export const getPopularHotel = async (dispatch) => {
+  dispatch({
+    type: CONTENT__START_LOADING,
+  });
+
   try {
     const data = await httpRequest.get("/hotel/popular");
     dispatch({
       type: GET_POPULAR_HOTEL,
       payload: data.data,
     });
+
     dispatch({
-      type: SEARCH__FALSE_LOADING,
-      value: false
-    })
+      type: CONTENT__FALSE_LOADING,
+    });
   } catch (error) {
     console.log(error, "false get popular hotel");
   }
 };
 
 export const getRecomendHotel = async (dispatch) => {
+  dispatch({
+    type: CONTENT__START_LOADING,
+  });
+
   try {
     const data = await httpRequest.get("/hotel/recomend");
     dispatch({
       type: GET_RECOMEND_HOTEL,
       payload: data.data,
     });
+
     dispatch({
-      type: SEARCH__FALSE_LOADING,
-      value: false
-    })
+      type: CONTENT__FALSE_LOADING,
+    });
   } catch (error) {
     console.log(error, "false get popular hotel");
   }
@@ -99,8 +117,10 @@ export const getAHotel = async (dispatch, slug) => {
 
 export const handleSearchHotel = async (dispatch, slug, city) => {
   try {
-    if(city) {
-      const data = await httpRequest.get(`/hotel/search?q=${slug}&city=${city}`);
+    if (city) {
+      const data = await httpRequest.get(
+        `/hotel/search?q=${slug}&city=${city}`
+      );
       dispatch({
         type: SEARCH_HOTEL,
         payload: data.data,
@@ -112,8 +132,6 @@ export const handleSearchHotel = async (dispatch, slug, city) => {
         payload: data.data,
       });
     }
-    
-   
   } catch (error) {
     console.log(error, "false search hotel");
     dispatch({
@@ -123,25 +141,25 @@ export const handleSearchHotel = async (dispatch, slug, city) => {
   }
 };
 
-//modal 
+//modal
 export const handleModalAnnounce = (dispatch, value) => {
   dispatch({
     type: MODAL_ANNOUNCE,
-    payload: value
-  })
-}
+    payload: value,
+  });
+};
 
 export const handleModalSetting = (dispatch, value) => {
   dispatch({
     type: MODAL_SETTING,
-    payload: value
-  })
-}
+    payload: value,
+  });
+};
 
 // localStorage
-export const getToken = (dispatch,token) => {
+export const getToken = (dispatch, token) => {
   dispatch({
     type: TOKEN,
-    payload: token
-  })
-}
+    payload: token,
+  });
+};

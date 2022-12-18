@@ -8,9 +8,12 @@ import listCategory from "./index";
 import "./HomePage.scss";
 
 function HomePage() {
-  const [category, setCategory] = useState("all");
+  const categoryLocal = JSON.parse(localStorage.getItem("category"));
+
+  const [category, setCategory] = useState(categoryLocal || "all" );
 
   const handleCategory = (value) => {
+    localStorage.setItem("category", JSON.stringify(value));
     setCategory(value);
   };
   return (

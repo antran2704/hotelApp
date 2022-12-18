@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import NavbarFooter from "../component/Navbar/NavbarFooter/NavbarFooter";
 import "./layout.scss";
 
-import { getUser, handleModalAnnounce, getToken} from "../store/actions";
+import { getUser, handleModalAnnounce, getToken } from "../store/actions";
 import Modal from "../component/Modal/ModalLogin";
 
 function DefaultLayout({ children }) {
@@ -15,12 +15,12 @@ function DefaultLayout({ children }) {
   const location = useLocation();
 
   useEffect(() => {
-  const value = JSON.parse(localStorage.getItem("token"));
-    getToken(dispatch,value)
-  },[dispatch])
+    const value = JSON.parse(localStorage.getItem("token"));
+    getToken(dispatch, value);
+  }, [dispatch]);
 
   useEffect(() => {
-    handleModalAnnounce(dispatch, false)
+    handleModalAnnounce(dispatch, false);
     getUser(dispatch, token);
   }, [dispatch, location.pathname, token]);
   return (

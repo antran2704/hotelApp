@@ -19,4 +19,25 @@
     font-weight: 500;
     text-align: center;
   }
+
+  .bookmark__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70%;
+
+    .bookmark__loading-icon {
+      font-size: 3rem;
+      animation: spinner linear 0.8s forwards infinite;
+    }
+  }
+}
+
+
+.App.dark {
+  .bookmark__loading {
+    .bookmark__loading-icon {
+      color: white;
+    }
+  }
 }

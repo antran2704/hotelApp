@@ -7,6 +7,8 @@ import {
   SEARCH_HOTEL,
   SEARCH__START_LOADING,
   SEARCH__FALSE_LOADING,
+  CONTENT__START_LOADING,
+  CONTENT__FALSE_LOADING,
   DARK_MODE,
   MODAL_ANNOUNCE,
   MODAL_SETTING,
@@ -20,6 +22,7 @@ const initialState = {
   searchHotel: [],
   token: null,
   loadingSearch: false,
+  contentLoading: false,
   darkMode: false,
   modalAnnounce: false,
   modalSetting: {
@@ -78,6 +81,19 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         loadingSearch: false,
+      };
+    }
+
+    case CONTENT__START_LOADING: {
+      return {
+        ...state,
+        contentLoading: true,
+      };
+    }
+    case CONTENT__FALSE_LOADING: {
+      return {
+        ...state,
+        contentLoading: false,
       };
     }
 
