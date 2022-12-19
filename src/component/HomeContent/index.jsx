@@ -33,7 +33,8 @@ function HomeContent({ category }) {
     }
     if (category === "recomend") {
       getRecomendHotel(dispatch);
-    } else {
+    } 
+    if (category === "all") {
       getAllHotel(dispatch);
     }
   }, [category, dispatch]);

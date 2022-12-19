@@ -10,6 +10,7 @@ import "./Bookmark.scss";
 
 function BookmarkPage() {
   const { user, token, contentLoading } = useSelector((state) => state.data);
+
   return (
     <div className="h-cus p-x bookmark">
       <NavbarHeader />
@@ -17,9 +18,21 @@ function BookmarkPage() {
         <h1>Bookmark</h1>
       </Animated>
 
-      {!contentLoading && user?._id && user.liked.length > 0 ? (
+      {!contentLoading && user?._id && user.liked.length > 0 && (
         <BookMarkList data={user.liked} />
-      ) : token === null ? (
+      )}
+
+      {!contentLoading && user?._id && user.liked.length === 0 && (
+        <Animated
+          animationIn="fadeInUp"
+          animationInDelay={600}
+          className="bookmark__desc"
+        >
+          Bạn chưa thích khách sạn nào cả🧐
+        </Animated>
+      )}
+
+      {token === null && (
         <Animated
           animationIn="fadeInUp"
           animationInDelay={600}
@@ -27,7 +40,9 @@ function BookmarkPage() {
         >
           Ố ồ hình như bạn chưa đăng nhập🧐
         </Animated>
-      ) : (
+      )}
+
+      {contentLoading && (
         <div className="bookmark__loading">
           <AiOutlineLoading3Quarters className="bookmark__loading-icon" />
         </div>

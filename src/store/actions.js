@@ -52,11 +52,19 @@ export const handleUnLikeHotel = async (data) => {
 };
 // Hotel Action
 export const getAllHotel = async (dispatch) => {
+  dispatch({
+    type: CONTENT__START_LOADING,
+  });
+
   try {
     const data = await httpRequest.get("/hotel/all");
     dispatch({
       type: GET_ALL_HOTEL,
       payload: data.data,
+    });
+
+    dispatch({
+      type: CONTENT__FALSE_LOADING,
     });
   } catch (error) {
     console.log(error, "false get all hotel");
@@ -70,6 +78,7 @@ export const getPopularHotel = async (dispatch) => {
 
   try {
     const data = await httpRequest.get("/hotel/popular");
+    console.log(data.data);
     dispatch({
       type: GET_POPULAR_HOTEL,
       payload: data.data,

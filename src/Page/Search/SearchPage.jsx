@@ -145,10 +145,10 @@ function SearchPage() {
         </div>
       </div>
 
-      {noResult && (
+      {noResult && !loadingSearch && (
         <p className="search__result">Ô ồ hình như không tìm thấy kết quả 🙄</p>
       )}
-      {searchHotel.length > 0 && !loadingSearch && (
+      {!loadingSearch && searchHotel.length > 0 && (
         <BookMarkList data={searchHotel} />
       )}
 
