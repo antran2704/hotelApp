@@ -10,7 +10,6 @@ import "./Bookmark.scss";
 
 function BookmarkPage() {
   const { user, token, contentLoading } = useSelector((state) => state.data);
-  console.log(contentLoading)
   return (
     <div className="h-cus p-x bookmark">
       <NavbarHeader />
