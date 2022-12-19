@@ -78,7 +78,6 @@ export const getPopularHotel = async (dispatch) => {
 
   try {
     const data = await httpRequest.get("/hotel/popular");
-    console.log(data.data);
     dispatch({
       type: GET_POPULAR_HOTEL,
       payload: data.data,
